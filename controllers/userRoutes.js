@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const User = require("../models/User");
+const {User,Boat} = require("../models/");
 
 //find all
 router.get("/", (req, res) => {
@@ -18,7 +18,9 @@ router.get("/", (req, res) => {
 });
 //find one
 router.get("/:id", (req, res) => {
-  User.findByPk(req.params.id)
+  User.findByPk(req.params.id,{
+    include:[Boat]
+  })
     .then((dbUser) => {
       if (dbUser) {
         res.json(dbUser);
